@@ -15,7 +15,6 @@ export const PexelsItem: React.FC = () => {
 
     return (    
         <div className={classes.modalContainer}>
-            {/* Back Icon */}
             <div className={classes.backIcon} onClick={() => navigate('/')}>
                 ← Back
             </div>
