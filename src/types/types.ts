@@ -24,11 +24,17 @@ export interface Photo {
 }
 
 export interface PexelsApiResponse {
-  page: number;
-  per_page: number;
-  photos: Photo[];
-  total_results: number;
-  next_page: string | null;
+  id: number;
+  photographer: string;
+  src: {
+    original: string;
+    large2x: string;
+    large: string;
+    medium: string;
+    small: string;
+  };
+  alt: string;
+  photos: Photo[],
 }
 
 export interface IContext {
@@ -37,4 +43,10 @@ export interface IContext {
   loading: boolean;
   error: string | null;
   searchPhotos: (query: string) => Promise<void>;
+}
+
+export interface IExactPhoto {
+  photographer: string,
+  src: string
+  alt: string,
 }
