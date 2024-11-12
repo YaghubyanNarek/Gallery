@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchPhotos } from '../types/api';
-import { Photo } from '../types/types';
+import type { Photo } from '../types/types';
 
 export const useSearchPhotos = () => {
   const [images, setImages] = useState<Photo[]>([]);
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1); 
-  const [query, setQuery] = useState<string>(''); 
+  const [page, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>('');
   const navigate = useNavigate();
 
   const handleSearch = async (newQuery: string) => {
@@ -17,16 +17,19 @@ export const useSearchPhotos = () => {
       return;
     }
 
-    setQuery(newQuery); 
+    setQuery(newQuery);
     setPage(1);
-    setImages([]); 
+    setImages([]);
     await fetchPhotosForQuery(newQuery, 1);
   };
 
-  const fetchPhotosForQuery = async (searchQuery: string, pageNumber: number) => {
-    if (loading) return; 
+  const fetchPhotosForQuery = async (
+    searchQuery: string,
+    pageNumber: number
+  ) => {
+    if (loading) return;
 
-    setLoading(true); 
+    setLoading(true);
     try {
       const photos = await fetchPhotos(searchQuery, pageNumber);
       setImages((prevImages) => [...prevImages, ...photos]);
@@ -45,10 +48,9 @@ export const useSearchPhotos = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      
       const bottom =
         window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.scrollHeight - 100; 
+        document.documentElement.scrollHeight - 100;
       if (bottom && query.trim()) {
         setPage(page + 1);
       }
@@ -56,13 +58,13 @@ export const useSearchPhotos = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [loading, query]); 
+  }, [loading, query]);
 
   useEffect(() => {
     if (page > 1) {
       fetchPhotosForQuery(query, page);
     }
-  }, [page, query]); 
+  }, [page, query]);
 
   return { images, error, handleSearch };
 };

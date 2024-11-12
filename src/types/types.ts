@@ -21,6 +21,7 @@ export interface Photo {
   src: PhotoSrc;
   liked: boolean;
   alt: string;
+  source?: string;
 }
 
 export interface PexelsApiResponse {
@@ -34,7 +35,7 @@ export interface PexelsApiResponse {
     small: string;
   };
   alt: string;
-  photos: Photo[],
+  photos: Photo[];
 }
 
 export interface IContext {
@@ -46,7 +47,7 @@ export interface IContext {
 }
 
 export interface IExactPhoto {
-  photographer: string,
-  src: string
-  alt: string,
+  photographer: string;
+  src: string;
+  alt: string;
 }

@@ -1,18 +1,22 @@
 import axios from 'axios';
 import { IExactPhoto, PexelsApiResponse, Photo } from '../types/types';
 
-export const fetchPhotos = async (query: string, page: number): Promise<Photo[]> => {
+export const fetchPhotos = async (
+  query: string,
+  page: number
+): Promise<Photo[]> => {
   try {
     const response = await axios.get<PexelsApiResponse>(
       'https://api.pexels.com/v1/search',
       {
         headers: {
-          Authorization: 'Uy4ysEhgxVruRgYGyJGqMQ4hbswnmushQXJDqPxyDgeXncuMRZPErHNU',
+          Authorization:
+            'Uy4ysEhgxVruRgYGyJGqMQ4hbswnmushQXJDqPxyDgeXncuMRZPErHNU',
         },
         params: {
           query: query,
-          page: page, 
-          per_page: 15, 
+          page: page,
+          per_page: 15,
         },
       }
     );
@@ -23,13 +27,16 @@ export const fetchPhotos = async (query: string, page: number): Promise<Photo[]>
   }
 };
 
-export const getExactPhoto = async (id: string | undefined):Promise<IExactPhoto> => {
+export const getExactPhoto = async (
+  id: string | undefined
+): Promise<IExactPhoto> => {
   try {
     const response = await axios.get<PexelsApiResponse>(
       `https://api.pexels.com/v1/photos/${id}`,
       {
         headers: {
-          Authorization: 'Uy4ysEhgxVruRgYGyJGqMQ4hbswnmushQXJDqPxyDgeXncuMRZPErHNU',
+          Authorization:
+            'Uy4ysEhgxVruRgYGyJGqMQ4hbswnmushQXJDqPxyDgeXncuMRZPErHNU',
         },
       }
     );
@@ -37,10 +44,10 @@ export const getExactPhoto = async (id: string | undefined):Promise<IExactPhoto>
     return {
       src: src.medium,
       photographer,
-      alt
-    }
-  } catch(error) {
+      alt,
+    };
+  } catch (error) {
     console.error('Error fetching data from Pexels API:', error);
     throw error;
-  } 
-}
+  }
+};
